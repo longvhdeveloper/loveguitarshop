@@ -13,7 +13,7 @@
 
     <!-- Main content -->
     <section class="content">
-        <form action="<?php echo base_url() . $module . '/vendor/add'; ?>" method="post" id="my_form" enctype="multipart/form-data">
+        <form action="<?php echo base_url() . $module . '/productcategory/add'; ?>" method="post" id="my_form" enctype="multipart/form-data">
             <?php
             if (validation_errors('<li>','</li>') != '') {
                 ?>
@@ -42,6 +42,13 @@
                 </div>
                 <div class="col-md-9 section-content">
                     <div class="col-md-6 clear form-group">
+                        <label for="fparentid"><?php echo $this->lang->line('category_parent');?></label>
+                        <select name="fparentid" id="fparentid" class="form-control">
+                            <option value="0">Choose parent category</option>
+                            <?php getMenuList($productcategorys); ?>
+                        </select>
+                    </div>
+                    <div class="col-md-6 clear form-group">
                         <label for="fname"><?php echo $this->lang->line('category_name');?><span class="star_required">*</span></label>
                         <input type="text" class="form-control" name="fname" id="fname" value="<?php echo set_value('fname'); ?>" />
                     </div>
@@ -56,10 +63,6 @@
                     <script>
                         CKEDITOR.replace( 'fdescription' );
                     </script>
-                    <div class="col-md-6 clear form-group">
-                        <label for="fparentid"><?php echo $this->lang->line('category_parent');?></label>
-
-                    </div>
                     <div class="col-md-3 clear form-group">
                         <label for="fstatus"><?php echo $this->lang->line('category_status');?></label>
                         <select id="fstatus" name="fstatus" class="form-control">
@@ -73,7 +76,7 @@
                 </div>
             </div>
             <div class="row section buttons">
-                <input type="submit" class="btn btn-success" id="fsubmit" name="fsubmit" value="Add" />
+                <input type="submit" class="btn btn-success pull-right" id="fsubmit" name="fsubmit" value="Add" />
                 <span class="pull-left">
                     <span class="star_required">*</span> : is required
                 </span>

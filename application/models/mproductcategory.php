@@ -11,6 +11,83 @@ class Mproductcategory extends Mbase
         parent::__construct();
     }
 
+    public function addData($data)
+    {
+        $this->db->insert($this->tableName, $data);
+        $id = $this->db->insert_id();
+
+        if ($id > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getProductcategorys(
+        $where = array(),
+        $orderBy = '',
+        $orderType = '',
+        $record = 0,
+        $start = 0,
+        $countOnly = false
+    ) {
+        if ($countOnly) {
+            return $this->countList($where);
+        } else {
+            return $this->getList($where, $orderBy, $orderType, $record, $start);
+        }
+    }
+
+    public function countList($where)
+    {
+        if (!empty($where)) {
+            foreach ($where as $colName => $value) {
+                if ($value != '') {
+                    $this->db->where($colName, $value);
+                }
+            }
+        }
+
+        $query = $this->db->get($this->tableName);
+
+        return $query->num_rows();
+    }
+
+    public function getList($where = array(), $orderBy, $orderType, $record, $start)
+    {
+        if (!empty($where)){
+            foreach ($where as $colName => $value) {
+                if ($value != '') {
+                    $this->db->where($colName, $value);
+                }
+            }
+        }
+        if ($orderBy != '' && $orderType != '') {
+            switch ($orderBy) {
+                case 'id' :
+                    $this->db->order_by('productcategory.pc_id', $orderType);
+                    break;
+                default:
+                    $this->db->order_by('productcategory.pc_id', $orderType);
+                    break;
+            }
+        }
+
+        if ($record > 0) {
+            $this->db->limit($record, $start);
+        }
+        $query = $this->db->get($this->tableName);
+
+        return $query->result_array();
+    }
+
+    public function getMaxDisplayOrder()
+    {
+        $this->db->select('Max(pc_displayorder) as displayorder');
+        $result = $this->db->get($this->tableName)->row_array();
+
+        return ((int)$result['displayorder'] + 1);
+    }
 
     public function getStatusList()
     {

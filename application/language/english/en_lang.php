@@ -55,6 +55,7 @@ $lang['category_slug'] = 'Slug';
 $lang['category_logo'] = 'Logo';
 $lang['category_status'] = 'Status';
 $lang['category_parent'] = 'Parent';
+$lang['category_addSuccess'] = 'Add product category information success.';
 ///////////////////////////////////////////////////////////////////
 $lang['default_add'] = 'Add';
 $lang['default_cancel'] = 'Cancel';

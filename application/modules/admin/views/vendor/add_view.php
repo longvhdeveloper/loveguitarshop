@@ -74,7 +74,7 @@
                 </div>
             </div>
             <div class="row section buttons">
-                <input type="submit" class="btn btn-success" id="fsubmit" name="fsubmit" value="Add" />
+                <input type="submit" class="btn btn-success pull-right" id="fsubmit" name="fsubmit" value="Add" />
                 <span class="pull-left">
                     <span class="star_required">*</span> : is required
                 </span>
