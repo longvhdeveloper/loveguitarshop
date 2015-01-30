@@ -59,4 +59,20 @@ class Menu
     {
         $this->baseUrl = $url;
     }
+
+    public function callMenu($parent = 0)
+    {
+        if (isset($this->data[$parent])) {
+            $this->result .= $this->open;
+
+            foreach ($this->data[$parent] as $key => $item) {
+                $id = $item['pc_id'];
+                $this->result .= $this->openItem;
+
+                $this->result .= $this->closeItem;
+            }
+
+            $this->result .= $this->close;
+        }
+    }
 }

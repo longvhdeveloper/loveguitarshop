@@ -23,6 +23,34 @@ class Mproductcategory extends Mbase
         }
     }
 
+    public function updateData($id, $data)
+    {
+        $this->db->where('pc_id', $id);
+        $this->db->update($this->tableName, $data);
+
+        return true;
+    }
+
+    public function deleteData($id)
+    {
+        $this->db->where('pc_id', $id);
+        $this->db->delete($this->tableName);
+
+        return true;
+    }
+
+    public function getProductcategory($id)
+    {
+        $this->db->where('pc_id', $id);
+        $query = $this->db->get($this->tableName);
+
+        if ($query->num_rows() > 0) {
+            return $query->row_array();
+        } else {
+            return false;
+        }
+    }
+
     public function getProductcategorys(
         $where = array(),
         $orderBy = '',

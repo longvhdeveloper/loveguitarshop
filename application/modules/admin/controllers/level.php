@@ -78,29 +78,35 @@ class Level extends AdminController
         $this->load->model('Mlevel');
         $level = $this->Mlevel->getLevel($id);
 
-        //load form_validation helper
-        $this->load->library('form_validation');
+        if ($level != false) {
+            //load form_validation helper
+            $this->load->library('form_validation');
 
-        //set rules for validation
-        $this->form_validation->set_rules('fname', 'Name', 'required');
+            //set rules for validation
+            $this->form_validation->set_rules('fname', 'Name', 'required');
 
-        if ($this->form_validation->run()) {
-            $levelData = array(
-                'lv_name' => $this->input->post('fname'),
-                'lv_description' => $this->input->post('fdescription'),
-                'lv_datemodified' => time(),
-            );
+            if ($this->form_validation->run()) {
+                $levelData = array(
+                    'lv_name' => $this->input->post('fname'),
+                    'lv_description' => $this->input->post('fdescription'),
+                    'lv_datemodified' => time(),
+                );
 
-            $this->Mlevel->updateData($levelData, $id);
-            $this->session->set_flashdata('flash_message', $this->lang->line('level_editSuccess'));
-            redirect(base_url() . 'admin/level/index');
+                $this->Mlevel->updateData($levelData, $id);
+                $this->session->set_flashdata('flash_message', $this->lang->line('level_editSuccess'));
+                redirect(base_url() . 'admin/level/index');
+            }
+
+            //set data for view
+            $this->data['level'] = $level;
+            $this->data['title'] = $this->lang->line('level_title_edit');
+            $this->data['content'] = 'level/edit_view';
+            $this->data['menu'] = 'level';
+            $this->load->view($this->data['path'], $this->data);
+        } else {
+            $this->data['redirectUrl'] = $url;
+            $this->data['title'] = 'Redirect';
+            $this->load->view($this->data['module'] . '/redirect', $this->data);
         }
-
-        //set data for view
-        $this->data['level'] = $level;
-        $this->data['title'] = $this->lang->line('level_title_edit');
-        $this->data['content'] = 'level/edit_view';
-        $this->data['menu'] = 'level';
-        $this->load->view($this->data['path'], $this->data);
     }
 }

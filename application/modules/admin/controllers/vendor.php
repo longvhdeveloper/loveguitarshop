@@ -74,45 +74,53 @@ class Vendor extends AdminController
     {
         $this->load->model('Mvendor');
         $vendor = $this->Mvendor->getVendor($id);
-        $this->data['vendor'] = $vendor;
 
-        //load form_validation helper
-        $this->load->library('form_validation');
+        if ($vendor != false) {
+            $this->data['vendor'] = $vendor;
 
-        //set rules for form_validation
-        $this->form_validation->set_rules('fname', 'Name', 'required|callback_checkVendorName');
-        $this->form_validation->set_rules('fslug', 'Slug', 'required');
+            //load form_validation helper
+            $this->load->library('form_validation');
+            $this->form_validation->CI =& $this;
 
-        if ($this->form_validation->run()) {
-            $vendorData = array(
-                'v_name' => $this->input->post('fname'),
-                'v_slug' => $this->input->post('fslug'),
-                'v_description' => $this->input->post('fdescription'),
-                'v_status' => $this->input->post('fstatus'),
-                'v_datemodified' => time(),
-            );
+            //set rules for form_validation
+            $this->form_validation->set_rules('fname', 'Name', 'required|callback_checkVendorName['.$id.']');
+            $this->form_validation->set_rules('fslug', 'Slug', 'required');
 
-            if ($this->Mvendor->updateData($vendorData, $id)) {
+            if ($this->form_validation->run()) {
+                $vendorData = array(
+                    'v_name' => $this->input->post('fname'),
+                    'v_slug' => $this->input->post('fslug'),
+                    'v_description' => $this->input->post('fdescription'),
+                    'v_status' => $this->input->post('fstatus'),
+                    'v_datemodified' => time(),
+                );
 
-                if ($this->input->post('fisdeletelogo') == 1) {
-                    $fileName = $this->baseDir . '/uploads/vendor/logo/' . $vendor['v_logo'];
-                    $this->Mvendor->deleteImage($fileName, $id);
+                if ($this->Mvendor->updateData($vendorData, $id)) {
+
+                    if ($this->input->post('fisdeletelogo') == 1) {
+                        $fileName = $this->baseDir . '/uploads/vendor/logo/' . $vendor['v_logo'];
+                        $this->Mvendor->deleteImage($fileName, $id);
+                    }
+
+                    $this->session->set_flashdata('flash_message', $this->lang->line('vendor_editSuccess'));
+                    redirect(base_url() . 'admin/vendor/index');
+                } else {
+                    $this->data['error'] = $this->Mvendor->getError();
                 }
 
-                $this->session->set_flashdata('flash_message', $this->lang->line('vendor_editSuccess'));
-                redirect(base_url() . 'admin/vendor/index');
-            } else {
-                $this->data['error'] = $this->Mvendor->getError();
             }
 
+            //set data for view
+            $this->data['statusOptions'] = $this->Mvendor->getStatusList();
+            $this->data['title'] = $this->lang->line('vendor_title_edit');
+            $this->data['menu'] = 'vendor';
+            $this->data['content'] = 'vendor/edit_view';
+            $this->load->view($this->data['path'], $this->data);
+        } else {
+            $this->data['redirectUrl'] = $url;
+            $this->data['title'] = 'Redirect';
+            $this->load->view($this->data['module'] . '/redirect', $this->data);
         }
-
-        //set data for view
-        $this->data['statusOptions'] = $this->Mvendor->getStatusList();
-        $this->data['title'] = $this->lang->line('vendor_title_edit');
-        $this->data['menu'] = 'vendor';
-        $this->data['content'] = 'vendor/edit_view';
-        $this->load->view($this->data['path'], $this->data);
     }
 
     public function delete($id)

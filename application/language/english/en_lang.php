@@ -30,7 +30,7 @@ $lang['level_deleteSuccess'] = 'Delete level information success.';
 $lang['level_editSuccess'] = 'Edit level information success.';
 
 /////////////////////////////////////////////////////////////////////
-$lang['user_title_listing'] = 'Loveguitar | Vendor &raquo; Listing';
+$lang['vendortitle_listing'] = 'Loveguitar | Vendor &raquo; Listing';
 $lang['vendor_title_add'] = 'Loveguitar | Vendor &raquo; Add';
 $lang['vendor_name'] = 'Name';
 $lang['vendor_description'] = 'Description';
@@ -47,7 +47,7 @@ $lang['vendor_title_edit'] = 'Loveguitar | Vendor &raquo; Edit';
 $lang['login_title_listing'] = 'Loveguitar | Login';
 
 ////////////////////////////////////////////////////////////////////
-$lang['user_title_listing'] = 'Loveguitar | Product category &raquo; Listing';
+$lang['category_title_listing'] = 'Loveguitar | Product category &raquo; Listing';
 $lang['category_title_add'] = 'Loveguitar | Product category &raquo; Add';
 $lang['category_name'] = 'Name';
 $lang['category_description'] = 'Description';
@@ -56,6 +56,10 @@ $lang['category_logo'] = 'Logo';
 $lang['category_status'] = 'Status';
 $lang['category_parent'] = 'Parent';
 $lang['category_addSuccess'] = 'Add product category information success.';
+$lang['category_head_list'] = 'Product categorys';
+$lang['category_editSuccess'] = 'Edit product category information success.';
+$lang['category_title_edit'] = 'Loveguitar | Product category &raquo; Edit';
+$lang['category_deleteSuccess'] = 'Delete product category information success.';
 ///////////////////////////////////////////////////////////////////
 $lang['default_add'] = 'Add';
 $lang['default_cancel'] = 'Cancel';
