@@ -5,10 +5,16 @@
 		<!-- Sidebar user panel -->
 		<div class="user-panel">
 			<div class="pull-left image">
-				<img src="img/avatar3.png" class="img-circle" alt="User Image" />
+				<?php
+                if ($userInfo['avatar'] == '') {
+                    echo '<img src="' .base_url().'public/default/admin/img/no-avatar.png" class="img-circle" alt="'.$userInfo['fullname'].'" />';
+                } else {
+                    echo '<img src="' .base_url().'uploads/user/avatar/'.$userInfo['avatar'].'" class="img-circle" alt="'.$userInfo['fullname'].'" />';
+                }
+                ?>
 			</div>
 			<div class="pull-left info">
-				<p>Hello, Jane</p>
+				<p><?php echo $userInfo['fullname']; ?></p>
 
 				<a href="#"><i class="fa fa-circle text-success"></i> Online</a>
 			</div>

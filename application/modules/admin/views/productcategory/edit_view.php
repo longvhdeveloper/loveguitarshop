@@ -13,6 +13,10 @@
 
     <!-- Main content -->
     <section class="content">
+        <ul class="nav nav-tabs">
+            <li role="presentation" class="active"><a href="javascript:void(0)"><i class="fa fa-info-circle"></i>&nbsp;Info</a></li>
+            <li role="presentation"><a href="<?php echo base_url() . $module . '/productfieldgroup/detail/' . $productcategory['pc_id'] ?>"><i class="fa fa-square"></i>&nbsp;Attribute</a></li>
+        </ul>
         <form action="<?php echo base_url() . $module . '/productcategory/edit/' . $productcategory['pc_id']; ?>" method="post" id="my_form" enctype="multipart/form-data">
             <?php
             if (validation_errors('<li>','</li>') != '') {

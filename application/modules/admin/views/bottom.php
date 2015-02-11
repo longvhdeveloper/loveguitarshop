@@ -11,10 +11,10 @@
 <!-- ./wrapper -->
 <script type="text/javascript">
     var menu = "<?php echo ($menu != '' ? $menu : 'dashboard'); ?>";
+    var baseUrl = "<?php echo base_url(); ?>";
 </script>
 <script src="<?php echo base_url() . 'public/' . $template_html . '/' . $module; ?>/js/jquery.min.js"></script>
 <script src="<?php echo base_url() . 'public/' . $template_html . '/' . $module; ?>/js/bootstrap.min.js" type="text/javascript"></script>
-<!--<script src="--><?php //echo base_url() . 'public/' . $template_html . '/' . $module; ?><!--/js/jquery-ui.min.js" type="text/javascript"></script>-->
 <script src="<?php echo base_url() . 'public/' . $template_html . '/' . $module; ?>/js/plugin/bootstrap-confirmation.min.js" type="text/javascript"></script>
 <?php
 if (isset($js) && !empty($js)) {

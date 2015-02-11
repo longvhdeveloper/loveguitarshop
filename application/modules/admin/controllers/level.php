@@ -77,6 +77,7 @@ class Level extends AdminController
     {
         $this->load->model('Mlevel');
         $level = $this->Mlevel->getLevel($id);
+        $url = base_url() . $this->data['module'] . '/level/index';
 
         if ($level != false) {
             //load form_validation helper

@@ -1,4 +1,8 @@
 @CHARSET "UTF-8";
+
+.hideinit{
+    display: none;
+}
 .content-header{
 	padding:0 !important;
 }
@@ -87,4 +91,34 @@
     background-image: url('../img/guitar-background.jpg');
 }
 
+.pfgdisplayorder{
+    width: 90px;
+    margin-left: 0;
+}
 
+.pfgname{
+    margin-left: -20px;
+}
+
+.delpfg{
+    margin-left: -20px;
+    margin-top: 5px;
+}
+
+.pfdisplayorder{
+	width: 90px;
+	margin-left: -5px;
+}
+
+.pfname{
+	margin-left: -20px;
+}
+
+.pfunit{
+	width: 80px;
+	margin-left: -20px;
+}
+
+.pfdatatype{
+	margin-left: -20px;
+}

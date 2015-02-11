@@ -1,6 +1,7 @@
 <?php
 class Productcategory extends AdminController
 {
+    private $recordPerPage = 5;
     public function __construct()
     {
         parent::__construct();
@@ -12,8 +13,20 @@ class Productcategory extends AdminController
         $this->data['total'] = $this->Mproductcategory->getProductcategorys(array(), '', '',0, 0, true);
 
         //load pagination helper
-        $productcategorys = $this->Mproductcategory->getProductcategorys(array(), 'id', 'DESC');
+        $this->load->helper('pagination');
+        $baseUrl = base_url() . $this->data['module'] . '/productcategory/index';
+        $this->data['pagination_link'] = create_pagination($this->data['total'],$this->recordPerPage, 4, $baseUrl);
+        $start = $this->uri->segment(4);
+
+        $productcategorys = $this->Mproductcategory->getProductcategorys(
+            array(),
+            'id',
+            'DESC',
+            $this->recordPerPage,
+            $start
+        );
         $this->data['productcategorys'] = $productcategorys;
+
 
         //set data for view
         $this->data['message'] = $this->session->flashdata('flash_message');
@@ -67,6 +80,8 @@ class Productcategory extends AdminController
         $this->load->model('Mproductcategory');
         $productcategory = $this->Mproductcategory->getProductcategory($id);
 
+        $url = base_url() . $this->data['module'] . '/productcategory/index';
+
         if ($productcategory != false) {
             $this->data['productcategory'] = $productcategory;
 
@@ -118,7 +133,37 @@ class Productcategory extends AdminController
         $this->load->model('Mproductcategory');
 
         if ($this->Mproductcategory->getProductcategory($id) != false) {
-            $this->Mproductcategory->deleteData($id);
+            if ($this->Mproductcategory->deleteData($id)) {
+                $this->load->model('Mproductfieldgroup');
+                $this->load->model('Mproductfield');
+                //get product field group
+                $productfieldgroups = $this->Mproductfieldgroup->getProductFieldGroups(
+                    array(
+                        'pc_id' => (int)$id
+                    ),
+                    'id',
+                    'ASC'
+                );
+
+                foreach ($productfieldgroups as $productfieldgroup) {
+                    //get product field of product field group
+                    $productfields = $this->Mproductfield->getProductFields(
+                        array(
+                            'pc_id' => $id,
+                            'pfg_id' => $productfieldgroup['pfg_id']
+                        ),
+                        'id',
+                        'ASC'
+                    );
+
+                    foreach ($productfields as $productfield) {
+                        $this->Mproductfield->delete($productfield['pf_id']);
+                    }
+
+                    $this->Mproductfieldgroup->delete($productfieldgroup['pfg_id']);
+                }
+            }
+
             $this->session->set_flashdata('flash_message', $this->lang->line('category_deleteSuccess'));
             redirect($url);
         } else {

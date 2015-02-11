@@ -100,6 +100,8 @@ class User extends AdminController
     {
         $this->load->model('Muser');
         $user = $this->Muser->getUser($id);
+
+        $url = base_url() . $this->data['module'] . '/user/index';
         if ($user != false) {
             //load form_validation helper
             $this->load->library('form_validation');

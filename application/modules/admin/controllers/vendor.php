@@ -75,6 +75,8 @@ class Vendor extends AdminController
         $this->load->model('Mvendor');
         $vendor = $this->Mvendor->getVendor($id);
 
+        $url = base_url() . $this->data['module'] . '/vendor/index';
+
         if ($vendor != false) {
             $this->data['vendor'] = $vendor;
 
